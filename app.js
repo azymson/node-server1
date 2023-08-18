@@ -1,14 +1,10 @@
-/*eslint-disable*/
 const express = require("express");
-const fetch = require('node-fetch');
+const http = require('http');
 var cors = require("cors");
 const bodyParser = require("body-parser");
-/*eslint-disable*/
 
 const app = express();
-
 const port = 3000;
-
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -16,28 +12,59 @@ app.use(cors());
 app.post("/filter", (req, res) => {
     const query = req.body; // Access the POST query
     console.log("catched request");
-    fetch("https://imbgroup.uz/set-dispatcher.php", {
-        body: JSON.stringify(query),
+    
+    const postData = JSON.stringify(query);
+    
+    const options = {
+        hostname: "imbgroup.uz",
+        port: 80,
+        path: "/set-dispatcher.php",
         method: "POST",
         headers: {
-            "Content-type": "application/json",
-        },
-    }).then(e=>{
+            "Content-Type": "application/json",
+            "Content-Length": Buffer.byteLength(postData)
+        }
+    };
+
+    const req1 = http.request(options, (response) => {
         console.log("SUCCESSFULLY ADDED DISPATCHER");
     });
-    setTimeout(() => {
-        fetch("https://imbgroup.uz/filter-data.php", {
-            body: JSON.stringify(query),
-            headers: { "Content-type": "application/json" },
-            method: "POST",
-        })
-            .then((e) => e.text())
-            .then((e) => {
-                console.log(e);
-            });
-            
 
-    }, 1000*60*10);
+    req1.on('error', (error) => {
+        console.error(error);
+    });
+
+    req1.write(postData);
+    req1.end();
+
+    setTimeout(() => {
+        const req2 = http.request({
+            hostname: "imbgroup.uz",
+            port: 80,
+            path: "/filter-data.php",
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Content-Length": Buffer.byteLength(postData)
+            }
+        }, (response) => {
+            let responseData = '';
+            response.on('data', (chunk) => {
+                responseData += chunk;
+            });
+
+            response.on('end', () => {
+                console.log(responseData);
+            });
+        });
+
+        req2.on('error', (error) => {
+            console.error(error);
+        });
+
+        req2.write(postData);
+        req2.end();
+    }, 1000 * 60 * 10);
 });
 
 app.listen(port, () => {
