@@ -9,7 +9,7 @@ const port = 3000;
 app.use(bodyParser.json());
 app.use(cors());
 
-app.get("/filter", (req, res) => {
+app.post("/filter", (req, res) => {
     const url = "https://imbgroup.uz/set-dispatcher.php";
     const params = {
         password: "$2y$10$HhAkmhDsiuYTIoP6UxJC..aCsyfQkhD5hcn.0s//alII2i/UxR/Re",
