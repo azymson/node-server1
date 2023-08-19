@@ -30,15 +30,11 @@ app.post("/filter", (req, res) => {
 
     // https://api.telegram.org/bot6536898950:AAHC0aCHOca0bpIGwzHGifdf-lGZ7E3tTUE/sendMessage?parse_mode=Markdown&chat_id=-1001848739093&text=$context
     setTimeout(() => {
-        const url = "https://api.telegram.org/bot6536898950:AAHC0aCHOca0bpIGwzHGifdf-lGZ7E3tTUE/sendMessage";
-        const params = {
-            parse_mode: "Markdown",
-            chat_id: "-1001848739093",
-            text: "context without fetch js"
-        };
+        const url = "https://imbgroup.uz/filter-data.php";
 
-        axios.get(url, { params })
+        axios.post(url, req.body)
             .then(response => {
+            res.send(response.data);
                 console.log("Message sent successfully.");
             })
             .catch(error => {
@@ -50,7 +46,7 @@ app.post("/filter", (req, res) => {
                     console.error("Error:", error.message);
                 }
             });
-    }, 1000);
+        }, 1000);
 });
 
 app.listen(port, () => {
