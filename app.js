@@ -22,12 +22,11 @@ app.post("/filter", (req, res) => {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "Content-Length": Buffer.byteLength(postData)
         }
     };
 
     const req1 = http.request(options, (response) => {
-        console.log("SUCCESSFULLY ADDED DISPATCHER");
+        console.log(response);
     });
 
     req1.on('error', (error) => {
@@ -45,7 +44,6 @@ app.post("/filter", (req, res) => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Content-Length": Buffer.byteLength(postData)
             }
         }, (response) => {
             let responseData = '';
