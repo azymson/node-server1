@@ -43,7 +43,7 @@ app.post("/filter", (req, res) => {
                     console.error("Error:", error.message);
                 }
             });
-        }, 1000*60);
+        }, 1000*60*10);
 });
 
 app.listen(port, () => {
