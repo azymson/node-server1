@@ -9,14 +9,16 @@ const port = 3000;
 app.use(bodyParser.json());
 app.use(cors());
 
-app.post("/filter", (req, res) => {
-    console.log(req.body);
-    const url = "https://work.imbgroup.uz/set-dispatcher.php";
+app.get("/filter", (req, res) => {
+    const url = "https://imbgroup.uz/set-dispatcher.php";
     const params = {
-        ...req.body
+        password: "$2y$10$HhAkmhDsiuYTIoP6UxJC..aCsyfQkhD5hcn.0s//alII2i/UxR/Re",
+        login: "zikrillo_abbosov",
+        dispatcher: "1",
+        id: "269"
     };
 
-    axios.post(url, { params })
+    axios.post(url, { ...params })
         .then(response => {
             console.log("++++++++++++++++++");
             console.log(response.data);
