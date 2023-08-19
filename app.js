@@ -1,28 +1,71 @@
-const express = require('express');
-const fetch = require('node-fetch');
+const express = require("express");
+const http = require('http');
+var cors = require("cors");
+const bodyParser = require("body-parser");
 
 const app = express();
-const port = 3000; // Вы можете использовать любой доступный порт
+const port = 3000;
 
-app.get('/filter/:value', async (req, res) => {
-  try {
-    const value = req.params.value;
+app.use(bodyParser.json());
+app.use(cors());
+
+app.post("/filter", (req, res) => {
+    const query = req.body; // Access the POST query
+    console.log("catched request");
     
-    // Выполнение GET-запроса на другой сервер
-    const response = await fetch(`https://api.example.com/data?filter=${value}`);
+    const postData = JSON.stringify(query);
     
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-    
-    const data = await response.json();
-    res.json(data);
-  } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
+    const options = {
+        hostname: "imbgroup.uz",
+        port: 80,
+        path: "/set-dispatcher.php",
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Content-Length": Buffer.byteLength(postData)
+        }
+    };
+
+    const req1 = http.request(options, (response) => {
+        console.log(response);
+    });
+
+    req1.on('error', (error) => {
+        console.error(error);
+    });
+
+    req1.write(postData);
+    req1.end();
+
+    setTimeout(() => {
+        const req2 = http.request({
+            hostname: "imbgroup.uz",
+            port: 80,
+            path: "/filter-data.php",
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        }, (response) => {
+            let responseData = '';
+            response.on('data', (chunk) => {
+                responseData += chunk;
+            });
+
+            response.on('end', () => {
+                console.log(responseData);
+            });
+        });
+
+        req2.on('error', (error) => {
+            console.error(error);
+        });
+
+        req2.write(postData);
+        req2.end();
+    }, 1000 * 60 * 10);
 });
 
 app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+    console.log(`Сервер запущен на порту ${port}`);
 });
