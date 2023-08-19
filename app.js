@@ -46,7 +46,7 @@ app.post("/filter", (req, res) => {
                     console.error("Error:", error.message);
                 }
             });
-        }, 1000);
+        }, 1000*60);
 });
 
 app.listen(port, () => {
