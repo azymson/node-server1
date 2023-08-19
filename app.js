@@ -11,14 +11,8 @@ app.use(cors());
 
 app.post("/filter", (req, res) => {
     const url = "https://imbgroup.uz/set-dispatcher.php";
-    const params = {
-        password: "$2y$10$HhAkmhDsiuYTIoP6UxJC..aCsyfQkhD5hcn.0s//alII2i/UxR/Re",
-        login: "zikrillo_abbosov",
-        dispatcher: "1",
-        id: "269"
-    };
 
-    axios.post(url, { ...params })
+    axios.post(url, req.body)
         .then(response => {
             console.log("++++++++++++++++++");
            res.send(response.data);
