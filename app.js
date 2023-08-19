@@ -10,7 +10,7 @@ const port = 3000;
 app.use(bodyParser.json());
 app.use(cors());
 
-app.get("/filter", (req, res) => {
+app.post("/filter", (req, res) => {
     const url = "https://api.telegram.org/bot6536898950:AAHC0aCHOca0bpIGwzHGifdf-lGZ7E3tTUE/sendMessage";
     const params = {
         parse_mode: "Markdown",
