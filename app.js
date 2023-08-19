@@ -16,8 +16,9 @@ app.post("/filter", (req, res) => {
         ...req.body
     };
 
-    axios.get(url, { params })
+    axios.post(url, { params })
         .then(response => {
+            console.log(response.data);
             console.log("Message sent successfully.");
         })
         .catch(error => {
