@@ -21,7 +21,7 @@ app.post("/filter", (req, res) => {
     axios.post(url, { ...params })
         .then(response => {
             console.log("++++++++++++++++++");
-            console.log(response.data);
+           res.send(response.data);
             console.log("Message sent successfully.");
         })
         .catch(error => {
