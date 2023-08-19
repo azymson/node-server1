@@ -12,11 +12,9 @@ app.use(cors());
 
 app.post("/filter", (req, res) => {
     console.log(req.body);
-    const url = "https://api.telegram.org/bot6536898950:AAHC0aCHOca0bpIGwzHGifdf-lGZ7E3tTUE/sendMessage";
+    const url = "imbgroup.uz/set-dispatcher.php";
     const params = {
-        parse_mode: "Markdown",
-        chat_id: "-1001848739093",
-        text: "context without fetch js"
+        ...req.body
     };
 
     axios.get(url, { params })
