@@ -14,8 +14,6 @@ app.post("/filter", (req, res) => {
 
     axios.post(url, req.body)
         .then(response => {
-            console.log("++++++++++++++++++");
-           res.send(response.data);
             console.log("Message sent successfully.");
         })
         .catch(error => {
@@ -34,7 +32,6 @@ app.post("/filter", (req, res) => {
 
         axios.post(url, req.body)
             .then(response => {
-            res.send(response.data);
                 console.log("Message sent successfully.");
             })
             .catch(error => {
