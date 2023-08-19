@@ -1,5 +1,4 @@
 const express = require("express");
-const http = require('http');
 var cors = require("cors");
 const axios = require("axios");
 const bodyParser = require("body-parser");
@@ -12,7 +11,7 @@ app.use(cors());
 
 app.post("/filter", (req, res) => {
     console.log(req.body);
-    const url = "imbgroup.uz/set-dispatcher.php";
+    const url = "https://work.imbgroup.uz/set-dispatcher.php";
     const params = {
         ...req.body
     };
